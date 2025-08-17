@@ -2,4 +2,5 @@
 import random
 
 x = random.choice([1,2,3,4,5])
-print(xdfasdf)
+print(x)
+#지수는 짱이다
