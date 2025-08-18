@@ -9,7 +9,7 @@ tim.speed("fastest")
 tim.penup()
 rgb_colors = []
 colors = colorgram.extract("histspot.jpg",30)
-
+tim.hideturtle()
 tim.setheading(225)
 tim.forward(300)
 tim.setheading(0)
