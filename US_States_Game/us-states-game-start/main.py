@@ -5,19 +5,39 @@ screen.title("U.S States Game")
 image = "blank_states_img.gif"
 screen.addshape(image)
 turtle.shape(image)
-states = []
+answered_states = []
 correct_score=0
 is_game_on = True
 data =pandas.read_csv("50_states.csv")
+states = data.state.to_list()
 
 while is_game_on:
-    answer_state = screen.textinput(title= f"{correct_score}/50 Guess the state", prompt = "What's another state's name")
-    for state in data["state"]:
-        states.append(state.lower())
-    if answer_state.lower() in states:
-        states.remove(answer_state)
-        correct_score += 1
-    else: print("Wrong!")
+    answer_state = screen.textinput(title= f"{correct_score}/50 Guess the state", prompt = "What's another state's name").title()
+    if answer_state == "Exit":
+        missing_states = [state for state in states if state not in answered_states]
+        # missing_states = []
+        # for state in states:
+        #     if state not in answered_states:
+        #         missing_states.append(state)
+        new_data = pandas.DataFrame(missing_states)
+        new_data.to_csv("States_to_learn.csv")
+        is_game_on = False
+    if len(answered_states) == 50:
+        is_game_on = False
+    if answer_state in states:
+        if answer_state in answered_states:
+            print("You answered that states!")
+        else:
+            state_data = data[data.state == answer_state]
+            row = state_data.iloc[0]
+            t = turtle.Turtle()
+            t.hideturtle()
+            t.pu()
+            t.goto(int(row.x),int(row.y))
+            t.write(state_data.state.item())
+            correct_score += 1
+        answered_states.append(answer_state)
+
 
 #1. Convert the guess to Title case
 
