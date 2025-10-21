@@ -4,10 +4,36 @@ import datetime as dt
 
 data_file = "./birthdays.csv"
 df=pd.read_csv(data_file)
-now = dt.datetime.now()
-today_month = now.month
-today_day = now.day
-today = (today_month,today_day)
+today = dt.datetime.now()
+today_tuple = (today.month,today.day)
+
+#    keys = ['apple', 'banana', 'cherry']
+#     values = [10, 20, 30]
+#     fruit_prices = {k: v for k, v in zip(keys, values)}
+#     # Result: {'apple': 10, 'banana': 20, 'cherry': 30}
+
+
+# 내가 원하는 데이터는 현재 날짜와 birthday.cvs가 일치하는 데이터들을 가져와야한다.(key는 tuple로 값은 해당 데이터들을 가져와야한다.)
+# today's date를 튜플로 뽑았기 때문에 tuple로 값을 매치해서 그에 해당하는 데이터들을 가져오는 방식을 선택해야한다.
+#birthday에 해당하는 튜플과 그에 따른 데이터를 얻으려면 dictionary를 사용하는게 용이(key,value)
+#새로운 dictionary를 얻기위해 dictionary comprehension을 사용:
+#dictionary comprehension:
+#dictionary 이름= {key 표현식:value 표현식 for 변수 in 반복가능 객체 if 조건 }
+#key = (data중 "month", data중"day")
+#value = 전체 데이터
+#변수설정: 인덱스와 데이터 줄( data_row)
+#반복가능객체 = df.iterrows()
+
+birhday_dict = {
+
+}
+
+
+birthdays_dict = {
+    (data_row["month"], data_row["day"]) : data_row for ( index, data_row) in df.iterrows()
+}
+print(birthdays_dict)
+
 
 ##################### Normal Starting Project ######################
 
@@ -18,14 +44,15 @@ today = (today_month,today_day)
 
 # 2. Check if today matches a birthday in the birthdays.csv
 # HINT 1: Create a tuple from today's month and day using datetime. e.g.
-# today = (today_month, today_day)
+# today = (today_month, today_day)--done
 
-# HINT 2: Use pandas to read the birthdays.csv
+# HINT 2: Use pandas to read the birthdays.csv--done
 
 # HINT 3: Use dictionary comprehension to create a dictionary from birthday.csv that is formated like this:
 # birthdays_dict = {
 #     (birthday_month, birthday_day): data_row
 # }
+
 #Dictionary comprehension template for pandas DataFrame looks like this:
 # new_dict = {new_key: new_value for (index, data_row) in data.iterrows()}
 #e.g. if the birthdays.csv looked like this:
