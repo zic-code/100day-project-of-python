@@ -23,16 +23,16 @@ today_tuple = (today.month,today.day)
 #value = 전체 데이터
 #변수설정: 인덱스와 데이터 줄( data_row)
 #반복가능객체 = df.iterrows()
-
-birhday_dict = {
-
-}
+#
+# birhday_dict = {
+#
+# }
 
 
 birthdays_dict = {
     (data_row["month"], data_row["day"]) : data_row for ( index, data_row) in df.iterrows()
 }
-print(birthdays_dict)
+print(df.iterrows())
 
 
 ##################### Normal Starting Project ######################
