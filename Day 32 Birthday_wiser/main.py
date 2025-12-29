@@ -1,16 +1,18 @@
 import pandas as pd
 import smtplib
 import datetime as dt
+import random
 
+
+#Hint1.
+## file path
 data_file = "./birthdays.csv"
+# file read
 df=pd.read_csv(data_file)
-today = dt.datetime.now()
-today_tuple = (today.month,today.day)
 
-#    keys = ['apple', 'banana', 'cherry']
-#     values = [10, 20, 30]
-#     fruit_prices = {k: v for k, v in zip(keys, values)}
-#     # Result: {'apple': 10, 'banana': 20, 'cherry': 30}
+# Hint 2
+today = dt.date.today()
+today = (today.month, today.day)
 
 
 # 내가 원하는 데이터는 현재 날짜와 birthday.cvs가 일치하는 데이터들을 가져와야한다.(key는 tuple로 값은 해당 데이터들을 가져와야한다.)
@@ -23,24 +25,42 @@ today_tuple = (today.month,today.day)
 #value = 전체 데이터
 #변수설정: 인덱스와 데이터 줄( data_row)
 #반복가능객체 = df.iterrows()
-#
-# birhday_dict = {
-#
-# }
 
 
 birthdays_dict = {
     (data_row["month"], data_row["day"]) : data_row for ( index, data_row) in df.iterrows()
 }
-print(df.iterrows())
+if today in birthdays_dict:
+    birthday_person = birthdays_dict[today]
+    name = birthday_person['name']
+    email = birthday_person['email']
+    template_number = 3
+    chosen_template = random.choice(range(1,template_number+1))
+    random_template = f"letter_{chosen_template}.txt"
+    print(random_template)
+    with open(f"letter_templates/{random_template}", "r",encoding="utf-8") as f:
+        letter_contents = f.read()
+        letter_contents = letter_contents.replace("[NAME]",name)
+        print(letter_contents)
+    #smtp
+    my_email= "jisoostest@gmail.com"
+    password="munn qguk iqmb gqzm"
 
+    with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+        connection.starttls()
+        connection.login(user=my_email, password=password)
+        connection.sendmail(
+            from_addr=my_email,
+            to_addrs=email,
+            msg=f"Subject:Happy Birthday!!\n\n {letter_contents}"
+        )
 
 ##################### Normal Starting Project ######################
 
 # 1. Update the birthdays.csv with your friends & family's details. 
 # HINT: Make sure one of the entries matches today's date for testing purposes. e.g.
 #name,email,year,month,day
-#YourName,your_own@email.com,today_year,today_month,today_day
+#YourName,your_own@email.com,today_year,today_month,today_day✅
 
 # 2. Check if today matches a birthday in the birthdays.csv
 # HINT 1: Create a tuple from today's month and day using datetime. e.g.
