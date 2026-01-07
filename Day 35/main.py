@@ -1,6 +1,6 @@
 import os
 import requests
-from flask.cli import load_dotenv
+from dotenv import load_dotenv
 from twilio.rest import Client
 load_dotenv()
 
@@ -13,8 +13,6 @@ weather_params = {
     "appid": api_key,
     "exclude":"current, minutely, daily"
 }
-
-
 
 Twillio_account_sid =os.environ.get("Twillio_account_sid")
 Twillio_auth_token = os.environ.get("Twillio_auth_token")
